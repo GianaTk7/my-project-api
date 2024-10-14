@@ -102,7 +102,7 @@ app.get('/Stores/:storeName', async (req, res) => {
 app.get('/users', async (req, res) => {
   try {
     const collection = db.collection("User"); 
-    const user = await collection.find({}).toArray{}
+    const user = await collection.find({}).toArray()
 
     if (user.length < 1) {
       return res.status(404).json({ message: "User not found" });
