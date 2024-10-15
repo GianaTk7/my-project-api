@@ -64,7 +64,7 @@ app.post("/signUp", async (req, res) => {
       throw new Error("Invalid email format");
     }
 
-    const collection = db.collection("Stores");
+    const collection = db.collection("User");
 
     const existingUser = await collection.findOne({ email: user.email });
     if (existingUser) {
