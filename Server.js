@@ -80,15 +80,22 @@ app.post("/signUp", async (req, res) => {
   }
 });
 app.get('/Stores', async (req, res) => {
-    try {
-        console.log("Fetching stores");
-        const stores = await db.collection('Stores').find({}).toArray();
-        console.log(stores); // Log the result to check if it's fetching data
-        res.json(stores);
-    } catch (error) {
-        console.error("Error retrieving Stores: ", error); // Log any errors
-        res.status(500).send("Error retrieving Stores");
-    }
+  try {
+      console.log("Fetching stores by address");
+      const address = req.query.address; 
+      const stores = await db.collection('Stores').find({ Address: address }).toArray();
+      
+      console.log(stores); 
+      
+      if (stores.length === 0) {
+          res.status(404).send("No stores found at this address");
+      } else {
+          res.status(200).json(stores);
+      }
+  } catch (error) {
+      console.error("Error retrieving Stores: ", error);
+      res.status(500).send("Error retrieving Stores");
+  }
 });
 
 // GET user by email
