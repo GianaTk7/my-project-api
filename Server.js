@@ -83,22 +83,22 @@ app.post("/signUp", async (req, res) => {
 });
 
 // GET user by email
-app.get('/Stores/:storeName', async (req, res) => {
+app.get('/users', async (req, res) => {
   try {
-    const storeName = req.params.storeName; 
-    const collection = db.collection("Stores"); 
-    const store = await collection.findOne({ name: storeName });
+    const email = req.params.email; 
+    const collection = db.collection("User"); 
+    const user = await collection.find({email:email})
 
-    if (!store) {
-      return res.status(404).json({ message: "Store not found" });
+    if (user.length < 1) {
+      return res.status(404).json({ message: "User not found" });
     }
-
-    res.json(store);
+     return res.status(200).json(user)
   } catch (error) {
-    console.error("Error fetching store:", error);
+    console.error("Error fetching user:", error);
     res.status(500).json({ message: error.message || "Internal Server Error" });
   }
 });
+
 
 // Update user details
 app.put('/users/:email', async (req, res) => {
@@ -111,7 +111,6 @@ app.put('/users/:email', async (req, res) => {
 
     console.log("Updating user with email:", userEmail);
     console.log("Data to update:", updatedUserData);
-
   
     const collection = db.collection("User");
     const result = await collection.updateOne(
