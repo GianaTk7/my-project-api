@@ -79,6 +79,15 @@ app.post("/signUp", async (req, res) => {
     res.status(500).json({ message: error.message || "Internal Server Error" });
   }
 });
+app.get('/Stores', async (req, res) => {
+  try {
+      const stores = await db.collection('Stores').find({}).toArray();
+      res.json(stores);
+  } catch (error) {
+      res.status(500).send("Error retrieving Stores");
+  }
+});
+
 
 // GET user by email
 app.get('/users', async (req, res) => {
@@ -129,7 +138,6 @@ app.put('/users/:email', async (req, res) => {
 });
 
 
-// Delete user by email
 app.delete('/users/:email', async (req, res) => {
   try {
     const userEmail = req.params.email;
