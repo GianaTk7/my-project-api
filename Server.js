@@ -9,10 +9,8 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
-
 const uri = process.env.MONGODB_STRING;
 let client, db;
-
 
 async function connectToMongo() {
   try {
@@ -118,11 +116,12 @@ app.put('/users/:email', async (req, res) => {
       { $set: updatedUserData }
     );
     console.log("Update result:", result);
-    if (result.modifiedCount === 0) {
+    if (result.acknowledged === false) {
       return res.status(404).json({ message: "User not found or no changes made" });
     }
-
-    res.json({ message: "User updated successfully" });
+    else{
+      res.json({ message: "User updated successfully" })  
+    }
   } catch (error) {
     console.error("Error updating user: ", error);
     res.status(500).json({ message: error.message || "Internal Server Error" });
