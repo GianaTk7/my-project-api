@@ -64,7 +64,7 @@ app.post("/signUp", async (req, res) => {
       throw new Error("Invalid email format");
     }
 
-    const collection = db.collection("Stores");
+    const collection = db.collection("User");
 
     const existingUser = await collection.findOne({ email: user.email });
     if (existingUser) {
@@ -78,24 +78,6 @@ app.post("/signUp", async (req, res) => {
     });
   } catch (error) {
     console.error("Error inserting user: ", error);
-    res.status(500).json({ message: error.message || "Internal Server Error" });
-  }
-});
-
-// GET user by email
-app.get('/Stores/:storeName', async (req, res) => {
-  try {
-    const storeName = req.params.storeName; 
-    const collection = db.collection("Stores"); 
-    const store = await collection.findOne({ name: storeName });
-
-    if (!store) {
-      return res.status(404).json({ message: "Store not found" });
-    }
-
-    res.json(store);
-  } catch (error) {
-    console.error("Error fetching store:", error);
     res.status(500).json({ message: error.message || "Internal Server Error" });
   }
 });
