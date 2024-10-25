@@ -81,34 +81,33 @@ app.post("/signUp", async (req, res) => {
 });
 app.get('/Stores', async (req, res) => {
   try {
-      console.log("Fetching stores by address");
-      const address = req.query.address; 
-      const stores = await db.collection('Stores').find({ Address: address }).toArray();
-      
-      console.log(stores); 
-      
-      if (stores.length === 0) {
-          res.status(404).send("No stores found at this address");
-      } else {
-          res.status(200).json(stores);
-      }
+    console.log("Fetching stores by address");
+    const address = req.query.address;
+    const stores = await db.collection('Stores').find({ Address: address }).toArray();
+
+    console.log(stores);
+
+    if (stores.length === 0) {
+      res.status(404).send("No stores found at this address");
+    } else {
+      res.status(200).json(stores);
+    }
   } catch (error) {
-      console.error("Error retrieving Stores: ", error);
-      res.status(500).send("Error retrieving Stores");
+    console.error("Error retrieving Stores: ", error);
+    res.status(500).send("Error retrieving Stores");
   }
 });
 
 // GET user by email
 app.get('/users', async (req, res) => {
   try {
-    const email = req.params.email; 
-    const collection = db.collection("User"); 
-    const user = await collection.find({email:email})
+    const collection = db.collection("User");
+    const user = await collection.find({}).toArray()
 
     if (user.length < 1) {
       return res.status(404).json({ message: "User not found" });
     }
-     return res.status(200).json(user)
+    return res.status(200).json({ message: user })
   } catch (error) {
     console.error("Error fetching user:", error);
     res.status(500).json({ message: error.message || "Internal Server Error" });
@@ -127,7 +126,7 @@ app.put('/users/:email', async (req, res) => {
 
     console.log("Updating user with email:", userEmail);
     console.log("Data to update:", updatedUserData);
-  
+
     const collection = db.collection("User");
     const result = await collection.updateOne(
       { email: userEmail },
@@ -137,8 +136,8 @@ app.put('/users/:email', async (req, res) => {
     if (result.acknowledged === false) {
       return res.status(404).json({ message: "User not found or no changes made" });
     }
-    else{
-      res.json({ message: "User updated successfully" })  
+    else {
+      res.json({ message: "User updated successfully" })
     }
   } catch (error) {
     console.error("Error updating user: ", error);
@@ -155,7 +154,7 @@ app.delete('/users/:email', async (req, res) => {
     const collection = db.collection("User");
     const result = await collection.deleteOne({ email: userEmail });
 
-    
+
     console.log("Delete result:", result);
 
     if (result.deletedCount === 0) {
