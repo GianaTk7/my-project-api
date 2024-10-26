@@ -50,7 +50,6 @@ const basicAuth = async (req, res, next) => {
     return res.status(401).send("Unauthorized");
   }
 };
-
 app.post("/signup", async (req, res) => {
   try {
     const user = req.body;
@@ -115,7 +114,7 @@ app.get('/users', async (req, res) => {
 });
 
 
-// Update user details
+// Update user details on mongobd
 app.put('/users/:email', async (req, res) => {
   try {
     const userEmail = req.params.email;
