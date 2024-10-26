@@ -113,7 +113,6 @@ app.get('/users', async (req, res) => {
   }
 });
 
-
 // Update user details on mongobd
 app.put('/users/:email', async (req, res) => {
   try {
@@ -144,7 +143,7 @@ app.put('/users/:email', async (req, res) => {
   }
 });
 
-
+//delete request 
 app.delete('/users/:email', async (req, res) => {
   try {
     const userEmail = req.params.email;
@@ -152,21 +151,17 @@ app.delete('/users/:email', async (req, res) => {
     console.log("Deleting user with email:", userEmail);
     const collection = db.collection("User");
     const result = await collection.deleteOne({ email: userEmail });
-
-
     console.log("Delete result:", result);
-
     if (result.deletedCount === 0) {
       return res.status(404).json({ message: "User not found" });
     }
-
     res.json({ message: "User deleted successfully" });
   } catch (error) {
     console.error("Error deleting user: ", error);
     res.status(500).json({ message: error.message || "Internal Server Error" });
   }
 });
-
+// adding new users 
 app.post('/api/data', (req, res) => {
   const receivedData = req.body;
   console.log('Received data:', receivedData);
