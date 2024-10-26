@@ -51,7 +51,7 @@ const basicAuth = async (req, res, next) => {
   }
 };
 
-app.post("/signUp", async (req, res) => {
+app.post("/signup", async (req, res) => {
   try {
     const user = req.body;
     if (user.password.length < 6) {
