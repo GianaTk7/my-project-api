@@ -173,5 +173,5 @@ app.post('/api/data', (req, res) => {
 
 app.listen(port, async () => {
   await connectToMongo();
-  console.log(`Server is running on http://localhost:${port}`);
+  console.log(`Server is running on http://3.94.6.186:${port}`);
 });  
