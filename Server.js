@@ -60,7 +60,6 @@ app.post("/signup", async (req, res) => {
     if (!user.email.includes("@")) {
       throw new Error("Invalid email format");
     }
-
     const collection = db.collection("User");
 
     const existingUser = await collection.findOne({ email: user.email });
@@ -112,8 +111,6 @@ app.get('/users', async (req, res) => {
     res.status(500).json({ message: error.message || "Internal Server Error" });
   }
 });
-
-// Update user details on mongobd
 app.put('/users/:email', async (req, res) => {
   try {
     const userEmail = req.params.email;
@@ -169,5 +166,5 @@ app.post('/api/data', (req, res) => {
 
 app.listen(port, async () => {
   await connectToMongo();
-  console.log(`Server is running on http://3.94.6.186:${port}`);
+  console.log(`Server is running on http://localhost:${port}`);
 });  
