@@ -121,10 +121,8 @@ app.put('/users/:email', async (req, res) => {
     if (!updatedUserData || Object.keys(updatedUserData).length === 0) {
       return res.status(400).json({ message: "No data provided for update" });
     }
-
     console.log("Updating user with email:", userEmail);
     console.log("Data to update:", updatedUserData);
-
     const collection = db.collection("User");
     const result = await collection.updateOne(
       { email: userEmail },
@@ -135,15 +133,13 @@ app.put('/users/:email', async (req, res) => {
       return res.status(404).json({ message: "User not found or no changes made" });
     }
     else {
-      res.json({ message: "User updated successfully" })
+      res.json({ message: "user updated successfully" })
     }
   } catch (error) {
     console.error("Error updating user: ", error);
     res.status(500).json({ message: error.message || "Internal Server Error" });
   }
 });
-
-//delete request 
 app.delete('/users/:email', async (req, res) => {
   try {
     const userEmail = req.params.email;
