@@ -1,19 +1,21 @@
 // Configuration and Imports
-
-// Importing necessary modules using ES module syntax
-import express from "express";
-import dotenv from "dotenv";
-import { MongoClient, ObjectId } from "mongodb";
-import bodyParser from "body-parser";
-import cors from "cors";
-
-dotenv.config();
+require("dotenv").config();
+const express = require("express");
 const app = express();
+const { MongoClient } = require("mongodb");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const { ObjectId } = require('mongodb');
+
+const port = process.env.PORT || 8000;
+const uri = process.env.MONGODB_STRING;
+
+let client, db;
+
 
 app.use(cors());
 app.use(express.json());
-app.use(bodyParser.json()); 
-const port = process.env.PORT || 8000;
+app.use(bodyParser.json());
 
 
 async function connectToMongo() {
