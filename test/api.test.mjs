@@ -308,31 +308,103 @@ const server = "http://52.90.48.96:8000";
 
 
 //POST ON USER"S CARD
+// describe("POST /userscart", () => {
+//     it("should add a new cart item for the user", async function () {
+//       this.timeout(5000);
+//       try {
+//         const newCartItem = {
+//           email: "CraceMKt@gmail.com",
+//           Order: "T-shirt",
+//           Size: "M",
+//           Color: "Red"
+//         };
+  
+//         const res = await chai.request.execute(server).post("/Userscart").send(newCartItem);
+  
+//         console.log("Response:", res);
+//         console.log("Status Code:", res.status);
+//         console.log("Response Body:", res.body.data);
 
-describe("POST /userscart", () => {
-    it("should add a new cart item for the user", async function () {
+//         expect(res).to.have.status(201);
+//         const responseData = res.body.data;
+//         expect(responseData).to.be.an("object");
+//         expect(responseData).to.have.property("email", newCartItem.email);
+//         expect(responseData).to.have.property("Order", newCartItem.Order);
+//         expect(responseData).to.have.property("Size", newCartItem.Size);
+//         expect(responseData).to.have.property("Color", newCartItem.Color);
+//       } catch (err) {
+//         console.error("Error:", err);
+//         throw err;
+//       }
+//     });
+//   });
+  
+// GET ALL  STORES  REQUEST 
+
+// describe("GET /stores", () => {
+//     it("should return all store data", async function () {
+//       this.timeout(5000);
+//       try {
+//         const res = await chai.request.execute(server).get("/Stores");
+  
+//         console.log("Response:", res);
+//         console.log("Status Code:", res.status);
+//         console.log("Response Body:", res.body);
+  
+  
+//         expect(res).to.have.status(200);
+  
+//         expect(res.body).to.be.an("array");
+//         expect(res.body).to.have.property("message", "Stores retrieved successfully");
+        // expect(res.body).to.have.property("data");
+  
+        // const storesData = res.body.data;
+        // expect(storesData).to.be.an("array");
+
+        // const firstStore = storesData;
+        // expect(firstStore).to.be.an("object");
+        // expect(firstStore).to.have.property("_id");
+        //  expect(firstStore).to.have.property("status");
+        // expect(firstStore).to.have.property("Address");
+        // expect(firstStore).to.have.property("storecode");
+        // expect(firstStore).to.have.property("Email");
+        // expect(firstStore).to.have.property("storeName");
+//       } catch (err) {
+//         console.error("Error:", err);
+//         throw err;
+//       }
+//     });
+//   });
+
+//POST ON STORE 
+
+describe("POST /stores", () => {
+    it("should add a new store", async function () {
       this.timeout(5000);
       try {
-        const newCartItem = {
-          email: "CraceMKt@gmail.com",
-          Order: "T-shirt",
-          Size: "M",
-          Color: "Red"
+        const newStore = {
+          status: "active",
+          Address: "New Shopping Mall",
+          storecode: "4592",
+          Email: "info.newsmall@gmail.com",
+          storeName: "Newset"
         };
   
-        const res = await chai.request.execute(server).post("/Userscart").send(newCartItem);
+        const res = await chai.request.execute(server).post("/stores").send(newStore);
   
         console.log("Response:", res);
         console.log("Status Code:", res.status);
-        console.log("Response Body:", res.body.data);
-
-        expect(res).to.have.status(201);
+        console.log("Response Body:", res.body);
+  
+        expect(res).to.have.status(201); 
+  
         const responseData = res.body.data;
         expect(responseData).to.be.an("object");
-        expect(responseData).to.have.property("email", newCartItem.email);
-        expect(responseData).to.have.property("Order", newCartItem.Order);
-        expect(responseData).to.have.property("Size", newCartItem.Size);
-        expect(responseData).to.have.property("Color", newCartItem.Color);
+        expect(responseData).to.have.property("status", newStore.status);
+        expect(responseData).to.have.property("Address", newStore.Address);
+        expect(responseData).to.have.property("storecode", newStore.storecode);
+        expect(responseData).to.have.property("Email", newStore.Email);
+        expect(responseData).to.have.property("storeName", newStore.storeName);
       } catch (err) {
         console.error("Error:", err);
         throw err;
@@ -340,3 +412,6 @@ describe("POST /userscart", () => {
     });
   });
   
+  
+  
+

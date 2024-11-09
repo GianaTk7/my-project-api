@@ -90,11 +90,11 @@ app.post("/login", async (req, res) => {
 //POST Request For Availabeproducts 
 app.post("/Availableproducts", async (req, res) => {
   try {
-      const newProduct = req.body; 
-      res.status(201).json({ data: newProduct });
+    const newProduct = req.body;
+    res.status(201).json({ data: newProduct });
   } catch (error) {
-      console.error("Error creating product:", error);
-      res.status(500).json({ message: "Internal server error" });
+    console.error("Error creating product:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
@@ -109,7 +109,7 @@ app.get("/Availableproducts", async (req, res) => {
       return res.status(404).send("No products found");
     }
 
-    console.log("Successfully retrieved all products:", products); 
+    console.log("Successfully retrieved all products:", products);
     res.status(200).json(products);
   } catch (error) {
     console.error("Error retrieving available products:", error);
@@ -120,14 +120,14 @@ app.get("/Availableproducts", async (req, res) => {
 // GET AvailableProduct by ID
 app.get("/Availableproducts/:id", async (req, res) => {
   try {
-    const id = req.params.id; 
+    const id = req.params.id;
     const product = await db.collection("Availableproducts").findOne({ _id: new ObjectId(id) });
 
     if (!product) {
       return res.status(404).send("Product not found with this ID");
     }
 
-    console.log("Successfully retrieved product by ID:", product); 
+    console.log("Successfully retrieved product by ID:", product);
     res.status(200).json(product);
   } catch (error) {
     console.error("Error retrieving product by ID:", error);
@@ -140,7 +140,7 @@ app.get("/Availableproducts/:id", async (req, res) => {
 
 app.post("/stores", async (req, res) => {
   try {
-   
+
     const { name, email, products } = req.body;
     if (!name || !email || !Array.isArray(products) || products.length === 0) {
       return res.status(400).send("Invalid input. Ensure 'name', 'email', and 'products' are provided.");
@@ -148,9 +148,9 @@ app.post("/stores", async (req, res) => {
     const newStore = {
       name,
       email,
-      products,  
+      products,
     };
-    const result = await db.collection("Stores").insertOne(newStore);
+    const result = await db.collection("stores").insertOne(newStore);
     if (result.acknowledged) {
       console.log("Store added successfully:", newStore);
       res.status(201).json({ message: "Store added successfully", data: newStore });
@@ -167,7 +167,7 @@ app.post("/stores", async (req, res) => {
 // Get  all  Stores 
 app.get("/stores", async (req, res) => {
   try {
-    const stores = await db.collection("Stores").find({}).toArray();
+    const stores = await db.collection("stores").find({}).toArray();
     console.log("Stores retrieved:", stores);
     if (stores.length === 0) {
       return res.status(404).send("No stores found");
@@ -193,7 +193,7 @@ app.get("/stores", async (req, res) => {
 //Get Stores by Email
 app.get("/stores/:email", async (req, res) => {
   try {
-    const email = req.params.email;  
+    const email = req.params.email;
     if (!email) {
       return res.status(400).send("Email is required");
     }
@@ -217,13 +217,13 @@ app.get("/stores/:email", async (req, res) => {
 //GET ONE  possiblelocations by id
 app.get("/possiblelocation/:id", async (req, res) => {
   try {
-    const id = req.params.id; 
+    const id = req.params.id;
     const location = await db.collection("Possiblelocation").findOne({ _id: new ObjectId(id) });
 
     if (!location) {
       return res.status(404).send("No location found with this ID");
     }
-    console.log("Successfully retrieved user's location by ID:", location); 
+    console.log("Successfully retrieved user's location by ID:", location);
     res.status(200).json({ message: "User's location found", data: location });
   } catch (error) {
     console.error("Error retrieving user's location by ID:", error);
@@ -284,7 +284,7 @@ app.post("/possiblelocation", async (req, res) => {
 //  GET  one User'cart by email 
 app.get("/singleusercart/:email", async (req, res) => {
   try {
-    const userEmail = req.params.email; 
+    const userEmail = req.params.email;
     const userCard = await db.collection("Userscart").findOne({ email: userEmail });
 
     if (!userCard) return res.status(404).send("No card found for this user");
@@ -301,7 +301,7 @@ app.get("/singleusercart/:email", async (req, res) => {
 //Get All userscart
 app.get("/userscart", async (req, res) => {
   try {
-    const allUserCarts = await db.collection("Userscart").find({}).toArray(); 
+    const allUserCarts = await db.collection("Userscart").find({}).toArray();
     if (allUserCarts.length === 0) {
       return res.status(404).send("No carts found");
     }
@@ -352,9 +352,9 @@ app.get("/users/:email", async (req, res) => {
 
     if (!user) return res.status(404).json({ message: "User does not exist" });
 
-    res.status(200).json(user); 
+    res.status(200).json(user);
   } catch (error) {
-    console.error("Error fetching user:", error);  
+    console.error("Error fetching user:", error);
     res.status(500).json({ message: error.message || "Internal Server Error" });
   }
 });
