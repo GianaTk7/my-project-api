@@ -140,17 +140,20 @@ app.get("/Availableproducts/:id", async (req, res) => {
 
 app.post("/stores", async (req, res) => {
   try {
-
-    const { name, email, products } = req.body;
+    const { name, email, products, status, Address, storecode, storeName } = req.body;
     if (!name || !email || !Array.isArray(products) || products.length === 0) {
-      return res.status(400).send("Invalid input. Ensure 'status', 'Address', 'storecode', 'Email' and 'storeName' are provided.");
+      return res.status(400).send("Invalid input. Ensure 'name', 'email', and 'products' are provided.");
     }
+
+   
     const newStore = {
-      status: "active",
-      Address: "New Shopping Mall",
-      storecode: "4592",
-      Email: "info.newsmall@gmail.com",
-      storeName: "Newset"
+      name: "cjfte",
+      email: "chyanservice@gmail.com",
+      products,
+      status: status || "active",
+      Address: Address || "New Shopping Mall",
+      storecode: storecode || "4592",
+      storeName: storeName || "Newset"
     };
     const result = await db.collection("stores").insertOne(newStore);
     if (result.acknowledged) {
@@ -164,6 +167,7 @@ app.post("/stores", async (req, res) => {
     res.status(500).send("Error adding store");
   }
 });
+
 
 
 // Get  all  Stores 

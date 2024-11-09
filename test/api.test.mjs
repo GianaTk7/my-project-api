@@ -340,41 +340,35 @@ const server = "http://52.90.48.96:8000";
 //   });
   
 // GET ALL  STORES  REQUEST 
+// describe("GET /Stores", () => {
+//     it("should return a list of stores", async function () {
+//         this.timeout(5000);
+//         try {
+//             const res = await chai.request.execute(server).get("/stores");
+         
+//             console.log("Response:", res);
+//             console.log("Status Code:", res.status);
+//             console.log("Response Body: ===>", res.body);
+//             expect(res).to.have.status(200);  
+//             expect(res.body).to.be.an("array")
+            
+//             const firstStore = res.body;
+//             expect(firstStore).to.have.property("_id");
+//             expect(firstStore).to.have.property("status");
+//             expect(firstStore).to.have.property("Address");
+//             expect(firstStore).to.have.property("storecode");
+//             expect(firstStore).to.have.property("Email");
+//             expect(firstStore).to.have.property("StoreName");
 
-// describe("GET /stores", () => {
-//     it("should return all store data", async function () {
-//       this.timeout(5000);
-//       try {
-//         const res = await chai.request.execute(server).get("/Stores");
-  
-//         console.log("Response:", res);
-//         console.log("Status Code:", res.status);
-//         console.log("Response Body:", res.body);
-  
-  
-//         expect(res).to.have.status(200);
-  
-//         expect(res.body).to.be.an("array");
-//         expect(res.body).to.have.property("message", "Stores retrieved successfully");
-        // expect(res.body).to.have.property("data");
-  
-        // const storesData = res.body.data;
-        // expect(storesData).to.be.an("array");
-
-        // const firstStore = storesData;
-        // expect(firstStore).to.be.an("object");
-        // expect(firstStore).to.have.property("_id");
-        //  expect(firstStore).to.have.property("status");
-        // expect(firstStore).to.have.property("Address");
-        // expect(firstStore).to.have.property("storecode");
-        // expect(firstStore).to.have.property("Email");
-        // expect(firstStore).to.have.property("storeName");
-//       } catch (err) {
-//         console.error("Error:", err);
-//         throw err;
-//       }
+//         } catch (err) {
+//             console.error("Error:", err);
+//             throw err; 
+//         }
 //     });
-//   });
+// });
+
+
+
 
 //POST ON STORE 
 
@@ -383,25 +377,25 @@ describe("POST /stores", () => {
       this.timeout(5000);
       try {
         const newStore = {
-          status: "active",
-          Address: "New Shopping Mall",
-          storecode: "4592",
-          Email: "info.newsmall@gmail.com",
-          storeName: "Newset"
+          status: "Adore",
+          Address: "Newmarket",
+          storecode: "7892",
+          Email: "info.newsmarket@gmail.com",
+          StoreName: "CETim"
         };
         const res = await chai.request.execute(server).post("/stores").send(newStore);
         console.log("Response:", res);
         console.log("Status Code:", res.status);
-        console.log("Response Body:", res.body);
+        console.log("Response Body:===>", res.body);
   
         expect(res).to.have.status(201); 
         const responseData = res.body.data;
-        expect(responseData).to.be.an("object");
+        expect(responseData).to.be.an("array");
         expect(responseData).to.have.property("status", newStore.status);
         expect(responseData).to.have.property("Address", newStore.Address);
         expect(responseData).to.have.property("storecode", newStore.storecode);
         expect(responseData).to.have.property("Email", newStore.Email);
-        expect(responseData).to.have.property("storeName", newStore.storeName);
+        expect(responseData).to.have.property("storeName", newStore.StoreName);
       } catch (err) {
         console.error("Error:", err);
         throw err;
