@@ -194,7 +194,6 @@ const server = "http://52.90.48.96:8000";
 // });
 
 //GET one  Possiblelocation by id
-
 // describe("GET /possiblelocation/:id", () => {
 //     it("should return a single possible location by id", async function () {
 //         this.timeout(5000); 
@@ -221,36 +220,88 @@ const server = "http://52.90.48.96:8000";
 
 //POST ONE Possiblelocation 
 
-describe("POST /possiblelocation", () => {
-    it("should create a new possible location", async function () {
-        this.timeout(5000);  
+// describe("POST /possiblelocation", () => {
+//     it("should create a new possible location", async function () {
+//         this.timeout(5000);  
+//         try {
+//             const locationData = {
+//                 Country: "Nigeria",
+//                 Province: "Kano State",
+//                 City: "Kano",
+//                 Userid: "('8722449ect48c59ab504fdes')" 
+//             };
+//             const res = await chai.request.execute(server).post("/Possiblelocation").send(locationData);  
+
+//             console.log("Response:", res);
+//             console.log("Status Code:", res.status);
+//             console.log("Response Body: ===>", res.body);  
+//             const newloaction = res.body.data;  
+//             expect(res).to.have.status(201);  
+//             expect(newloaction).to.be.an("object"); 
+//             expect(newloaction).to.have.property("_id");  
+//             expect(newloaction).to.have.property("Country", locationData.Country); 
+//             expect(newloaction).to.have.property("Province", locationData.Province); 
+//             expect(newloaction).to.have.property("City", locationData.City);  
+//             expect(newloaction).to.have.property("Userid", locationData.Userid);  
+
+//         } catch (err) {
+//             console.error("Error:", err);
+//             throw err;  
+//         }
+//     });
+// });
+
+
+//GET ALL Request For User'scart
+// describe("GET /userscart", () => {
+//     it("should return the user's cart data", async function () {
+//         this.timeout(5000); 
+//         try {
+//             const res = await chai.request.execute(server).get("/Userscart");
+
+//             console.log("Response:", res);
+//             console.log("Status Code:", res.status);
+//             console.log("Response Body: ===>", res.body);
+//             const cartItems = res.body.data;
+//             expect(res).to.have.status(200);  
+//             expect(cartItems).to.be.an("array");  
+//             if (cartItems.length > 0) {
+//                 console.log("First Cart Item:", cartItems[0]);  
+//                 expect(cartItems[0]).to.have.property("Order");
+//                 expect(cartItems[0]).to.have.property("Size");
+//                 expect(cartItems[0]).to.have.property("Color");
+//             }
+//         } catch (err) {
+//             console.error("Error:", err);
+//             throw err;  
+//         }
+//     });
+// });
+
+
+//GET a singleusercart  Request by email
+
+describe("GET /singleusercart/:email", () => {
+    it("should return the user's cart data by email", async function () {
+        this.timeout(5000); 
         try {
-            const locationData = {
-                Country: "Canada",
-                Province: "North Eastern",
-                City: "Quebec",
-                Userid: "665244ebbc48c59ab504fdae"  
-            };
-            const res = await chai.request.execute(server).post("/Possiblelocation").send(locationData);  
+            const Useremail = "thandoanele@icloud.com";  
+            const res = await chai.request.execute(server).get(`/Userscart/${Useremail}`);
 
             console.log("Response:", res);
             console.log("Status Code:", res.status);
-            console.log("Response Body: ===>", res.body);  
+            console.log("Response Body: ===>", res.body);
+            expect(res).to.have.status(200);
 
-            const newloaction = res.body.data;  
-
-            expect(res).to.have.status(201);  
-            expect(newloaction).to.be.an("array"); 
-            expect(newloaction).to.have.property("_id");  
-            expect(newloaction).to.have.property("Country", locationData.Country); 
-            expect(newloaction).to.have.property("Province", locationData.Province); 
-            expect(newloaction).to.have.property("City", locationData.City);  
-            expect(newloaction).to.have.property("Userid", locationData.Userid);  
-
+            const userCart = res.body.data;
+            expect(userCart).to.be.an("object");
+            expect(userCart).to.have.property("_id");
+            expect(userCart).to.have.property("Order");
+            expect(userCart).to.have.property("Size");
+            expect(userCart).to.have.property("Color");
         } catch (err) {
             console.error("Error:", err);
             throw err;  
         }
     });
 });
-

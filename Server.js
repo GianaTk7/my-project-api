@@ -249,15 +249,12 @@ app.get("/possiblelocation", async (req, res) => {
 });
 
 //POST FOR Possiblelocation 
-
-
 app.post("/possiblelocation", async (req, res) => {
   try {
     const { Country, Province, City, Userid } = req.body;
     if (!Country || !Province || !City || !Userid) {
       return res.status(400).send("All fields are required: Country, Province, City, Userid");
     }
-
     const newLocation = {
       Country: "Nigeria",
       Province: "Kano State",
@@ -284,7 +281,7 @@ app.post("/possiblelocation", async (req, res) => {
 
 
 
-// User'cart by email 
+//  GET  one User'cart by email 
 app.get("/singleusercart/:email", async (req, res) => {
   try {
     const userEmail = req.params.email; 
