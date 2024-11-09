@@ -389,15 +389,12 @@ describe("POST /stores", () => {
           Email: "info.newsmall@gmail.com",
           storeName: "Newset"
         };
-  
         const res = await chai.request.execute(server).post("/stores").send(newStore);
-  
         console.log("Response:", res);
         console.log("Status Code:", res.status);
         console.log("Response Body:", res.body);
   
         expect(res).to.have.status(201); 
-  
         const responseData = res.body.data;
         expect(responseData).to.be.an("object");
         expect(responseData).to.have.property("status", newStore.status);

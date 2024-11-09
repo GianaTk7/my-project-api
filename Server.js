@@ -143,12 +143,14 @@ app.post("/stores", async (req, res) => {
 
     const { name, email, products } = req.body;
     if (!name || !email || !Array.isArray(products) || products.length === 0) {
-      return res.status(400).send("Invalid input. Ensure 'name', 'email', and 'products' are provided.");
+      return res.status(400).send("Invalid input. Ensure 'status', 'Address', 'storecode', 'Email' and 'storeName' are provided.");
     }
     const newStore = {
-      name,
-      email,
-      products,
+      status: "active",
+      Address: "New Shopping Mall",
+      storecode: "4592",
+      Email: "info.newsmall@gmail.com",
+      storeName: "Newset"
     };
     const result = await db.collection("stores").insertOne(newStore);
     if (result.acknowledged) {
@@ -197,7 +199,7 @@ app.get("/stores/:email", async (req, res) => {
     if (!email) {
       return res.status(400).send("Email is required");
     }
-    const stores = await db.collection("Stores").find({ email: email }).toArray();
+    const stores = await db.collection("stores").find({ email: email }).toArray();
     if (stores.length === 0) {
       return res.status(404).send("No stores found for this email");
     }
