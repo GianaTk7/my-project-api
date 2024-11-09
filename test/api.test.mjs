@@ -218,7 +218,7 @@ const server = "http://52.90.48.96:8000";
 //     });
 // });
 
-//POST ONE Possiblelocation 
+//POST ON Possiblelocation 
 
 // describe("POST /possiblelocation", () => {
 //     it("should create a new possible location", async function () {
@@ -376,33 +376,42 @@ describe("POST /stores", () => {
     it("should add a new store", async function () {
       this.timeout(5000);
       try {
+ 
         const newStore = {
+          name: "CETim",
+          email: "info.newsmarket@gmail.com",
+          products: [
+            { productId: "001", name: "Newset", price: R100 },
+         
+          ],
           status: "Adore",
           Address: "Newmarket",
           storecode: "7892",
-          Email: "info.newsmarket@gmail.com",
-          StoreName: "CETim"
+          storeName: "CETim"
         };
+  
         const res = await chai.request.execute(server).post("/stores").send(newStore);
+  
         console.log("Response:", res);
         console.log("Status Code:", res.status);
         console.log("Response Body:===>", res.body);
   
-        expect(res).to.have.status(201); 
+        expect(res).to.have.status(201);
         const responseData = res.body.data;
-        expect(responseData).to.be.an("array");
+        expect(responseData).to.be.an("object");
+        expect(responseData).to.have.property("name", newStore.name);
+        expect(responseData).to.have.property("email", newStore.email);
         expect(responseData).to.have.property("status", newStore.status);
         expect(responseData).to.have.property("Address", newStore.Address);
         expect(responseData).to.have.property("storecode", newStore.storecode);
-        expect(responseData).to.have.property("Email", newStore.Email);
-        expect(responseData).to.have.property("storeName", newStore.StoreName);
+        expect(responseData).to.have.property("storeName", newStore.storeName);
+        expect(responseData.products).to.be.an("array").that.has.lengthOf(2);
       } catch (err) {
         console.error("Error:", err);
         throw err;
       }
     });
   });
-  
   
   
 
