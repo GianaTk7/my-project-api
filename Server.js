@@ -90,15 +90,14 @@ app.post("/login", async (req, res) => {
 //POST Request For Availabeproducts 
 app.post("/Availableproducts", async (req, res) => {
   try {
-    const newProduct = req.body;  
-    const result = await db.collection("Availableproducts").insertOne(newProduct);
-
-    res.status(201).send("Product added successfully");
+      const newProduct = req.body; 
+      res.status(201).json({ data: newProduct });
   } catch (error) {
-    console.error("Error adding product:", error);
-    res.status(500).send("Error adding product");
+      console.error("Error creating product:", error);
+      res.status(500).json({ message: "Internal server error" });
   }
 });
+
 
 
 // GET ALL  AvailableProject 
@@ -215,7 +214,7 @@ app.get("/stores/:email", async (req, res) => {
 });
 
 
-//Get possiblelocations by id
+//GET ONE  possiblelocations by id
 app.get("/possiblelocation/:id", async (req, res) => {
   try {
     const id = req.params.id; 
@@ -246,6 +245,40 @@ app.get("/possiblelocation", async (req, res) => {
   } catch (error) {
     console.error("Error retrieving all locations:", error);
     res.status(500).send("Error retrieving all locations");
+  }
+});
+
+//POST FOR Possiblelocation 
+
+
+app.post("/possiblelocation", async (req, res) => {
+  try {
+    const { Country, Province, City, Userid } = req.body;
+    if (!Country || !Province || !City || !Userid) {
+      return res.status(400).send("All fields are required: Country, Province, City, Userid");
+    }
+
+    const newLocation = {
+      Country: "Nigeria",
+      Province: "Kano State",
+      City: "Kano",
+      Userid: "('8722449ect48c59ab504fdes')",
+    };
+    const result = await db.collection("Possiblelocation").insertOne(newLocation);
+    if (result.acknowledged) {
+      res.status(201).json({
+        message: "Possible location created successfully",
+        data: {
+          _id: result.insertedId,
+          ...newLocation,
+        },
+      });
+    } else {
+      res.status(500).send("Error creating possible location");
+    }
+  } catch (error) {
+    console.error("Error creating possible location:", error);
+    res.status(500).send("Error creating possible location");
   }
 });
 
