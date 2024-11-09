@@ -340,49 +340,51 @@ const server = "http://52.90.48.96:8000";
 //   });
   
 // GET ALL  STORES  REQUEST 
-// describe("GET /Stores", () => {
-//     it("should return a list of stores", async function () {
-//         this.timeout(5000);
-//         try {
-//             const res = await chai.request.execute(server).get("/stores");
-         
-//             console.log("Response:", res);
-//             console.log("Status Code:", res.status);
-//             console.log("Response Body: ===>", res.body);
-//             expect(res).to.have.status(200);  
-//             expect(res.body).to.be.an("array")
-            
-//             const firstStore = res.body;
-//             expect(firstStore).to.have.property("_id");
-//             expect(firstStore).to.have.property("status");
-//             expect(firstStore).to.have.property("Address");
-//             expect(firstStore).to.have.property("storecode");
-//             expect(firstStore).to.have.property("Email");
-//             expect(firstStore).to.have.property("StoreName");
+describe("GET /stores", () => {
+    it("should return a list of stores", async function () {
+      this.timeout(5000); 
+  
+      try {
+        const res = await chai.request.execute(server).get("/stores");
+        console.log("Response:", res);
+        console.log("Status Code:", res.status);
+        console.log("Response Body: ===>", res.body);
+  
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.an("array");
 
-//         } catch (err) {
-//             console.error("Error:", err);
-//             throw err; 
-//         }
-//     });
-// });
+        res.body.forEach(store => {
+          expect(store).to.have.property("_id");
+          expect(store).to.have.property("name");
+          expect(store).to.have.property("email");
+          expect(store).to.have.property("status");
+          expect(store).to.have.property("Address");
+          expect(store).to.have.property("storecode");
+          expect(store).to.have.property("storeName");
+        });
+  
+      } catch (err) {
+        console.error("Error:", err);
+        throw err; 
+      }
+    });
+  });
+  
 
 
 
 
 //POST ON STORE 
-
 describe("POST /stores", () => {
     it("should add a new store", async function () {
       this.timeout(5000);
       try {
- 
         const newStore = {
           name: "CETim",
           email: "info.newsmarket@gmail.com",
           products: [
             { productId: "001", name: "Newset", price: 100 },
-         
+            { "productId": "002", "name": "Product 2", "price": 200 }
           ],
           status: "active",
           Address: "Newmarket",

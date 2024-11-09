@@ -178,21 +178,27 @@ app.get("/stores", async (req, res) => {
     if (stores.length === 0) {
       return res.status(404).send("No stores found");
     }
-    const allProducts = stores.map(store => {
-      console.log("Products in store:", store.products);
-      return store.products;
-    }).flat();
+    const storepro = stores.map(store => {
+      return {
+        _id: store._id,
+        name: store.name,
+        email: store.email,
+        status: store.status,
+        Address: store.Address,
+        storecode: store.storecode,
+        storeName: store.storeName,
+        products: store.products
+      };
+    });
 
-    if (allProducts.length === 0) {
-      return res.status(404).send("No products available in the stores");
-    }
     console.log("Stores retrieved successfully");
-    res.status(200).json(allProducts);
+    res.status(200).json(storepro); 
   } catch (error) {
     console.error("Error retrieving stores:", error);
     res.status(500).send("Error retrieving stores");
   }
 });
+
 
 
 
