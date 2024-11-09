@@ -312,6 +312,23 @@ app.get("/userscart", async (req, res) => {
   }
 });
 
+//POST REQUEST FOR USERSCART
+app.post("/userscart", async (req, res) => {
+  try {
+    const { email, Order, Size, Color } = req.body;
+    if (!email || !Order || !Size || !Color) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+    const newCartItem = { email, Order, Size, Color };
+    const result = await db.collection("Userscart").insertOne(newCartItem);
+    res.status(201).json({ message: "User's cart item added", data: newCartItem });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Error adding to User's cart");
+  }
+});
+
+
 // Get All Users
 app.get("/users", async (req, res) => {
   try {

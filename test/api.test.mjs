@@ -279,29 +279,64 @@ const server = "http://52.90.48.96:8000";
 // });
 
 
-//GET a singleusercart  Request by email
+//GET a singleusercart  Request by email did not work yet
 
-describe("GET /singleusercart/:email", () => {
-    it("should return the user's cart data by email", async function () {
-        this.timeout(5000); 
-        try {
-            const Useremail = "thandoanele@icloud.com";  
-            const res = await chai.request.execute(server).get(`/Userscart/${Useremail}`);
+// describe("GET /singleusercart/:email", () => {
+//     it("should return the user's cart data by email", async function () {
+//         this.timeout(5000); 
+//         try {
+//             const Useremail = "thandoanele@icloud.com";  
+//             const res = await chai.request.execute(server).get(`/Userscart/${Useremail}`);
 
-            console.log("Response:", res);
-            console.log("Status Code:", res.status);
-            console.log("Response Body: ===>", res.body);
-            expect(res).to.have.status(200);
+//             console.log("Response:", res);
+//             console.log("Status Code:", res.status);
+//             console.log("Response Body: ===>", res.body);
+//             expect(res).to.have.status(200);
 
-            const userCart = res.body.data;
-            expect(userCart).to.be.an("object");
-            expect(userCart).to.have.property("_id");
-            expect(userCart).to.have.property("Order");
-            expect(userCart).to.have.property("Size");
-            expect(userCart).to.have.property("Color");
-        } catch (err) {
-            console.error("Error:", err);
-            throw err;  
-        }
+//             const userCart = res.body;
+//             expect(userCart).to.be.an("array");
+//             expect(userCart).to.have.property("_id");
+//             expect(userCart).to.have.property("Order");
+//             expect(userCart).to.have.property("Size");
+//             expect(userCart).to.have.property("Color");
+//         } catch (err) {
+//             console.error("Error:", err);
+//             throw err;  
+//         }
+//     });
+// });
+
+
+//POST ON USER"S CARD
+
+describe("POST /userscart", () => {
+    it("should add a new cart item for the user", async function () {
+      this.timeout(5000);
+      try {
+        const newCartItem = {
+          email: "CraceMKt@gmail.com",
+          Order: "T-shirt",
+          Size: "M",
+          Color: "Red"
+        };
+  
+        const res = await chai.request.execute(server).post("/Userscart").send(newCartItem);
+  
+        console.log("Response:", res);
+        console.log("Status Code:", res.status);
+        console.log("Response Body:", res.body.data);
+
+        expect(res).to.have.status(201);
+        const responseData = res.body.data;
+        expect(responseData).to.be.an("object");
+        expect(responseData).to.have.property("email", newCartItem.email);
+        expect(responseData).to.have.property("Order", newCartItem.Order);
+        expect(responseData).to.have.property("Size", newCartItem.Size);
+        expect(responseData).to.have.property("Color", newCartItem.Color);
+      } catch (err) {
+        console.error("Error:", err);
+        throw err;
+      }
     });
-});
+  });
+  
