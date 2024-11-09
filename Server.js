@@ -303,11 +303,11 @@ app.get("/users/:email", async (req, res) => {
     const collection = db.collection("User");
     const user = await collection.findOne({ email: userEmail });
 
-    if (!user) return res.status(404).json({ message: "User does not exist " });
-Excit
-    res.status(200).json(user);
+    if (!user) return res.status(404).json({ message: "User does not exist" });
+
+    res.status(200).json(user); 
   } catch (error) {
-    console.error("Error fetching user:", error);
+    console.error("Error fetching user:", error);  
     res.status(500).json({ message: error.message || "Internal Server Error" });
   }
 });
