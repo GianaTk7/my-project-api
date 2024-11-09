@@ -140,17 +140,22 @@ app.get("/Availableproducts/:id", async (req, res) => {
 
 app.post("/stores", async (req, res) => {
   try {
-
-    const { name, email, products } = req.body;
+    const { name, email, products, status, Address, storecode, storeName } = req.body;
+    if (!name || !email || !Array.isArray(products) || products.length === 0) {
+      return res.status(400).send("Invalid input. 'name', 'email', and 'products' must be provided.");
+    }
     const newStore = {
-      name: name || "Default Store",
-      email: email || "default@store.com",
-      products: products || [],
-      status: "active",
-      Address: "Default Address",
-      storecode: "0001",
-      storeName: "Default Store Name"
+      name: name || "CETim",
+      email: email || "info.newsmarket@gmail.com",
+      products: products || [
+        { productId: "001", name: "Newset", price: 100 } 
+      ],
+      status: status || "active",
+      Address: Address || "Newmarket",
+      storecode: storecode || "7892",
+      storeName: storeName || "CETim"
     };
+
     const result = await db.collection("stores").insertOne(newStore);
     if (result.acknowledged) {
       console.log("Store added successfully:", newStore);
@@ -163,8 +168,6 @@ app.post("/stores", async (req, res) => {
     res.status(500).send("Error adding store");
   }
 });
-
-
 
 
 // Get  all  Stores 

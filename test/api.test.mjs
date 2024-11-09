@@ -381,17 +381,15 @@ describe("POST /stores", () => {
           name: "CETim",
           email: "info.newsmarket@gmail.com",
           products: [
-            { productId: "001", name: "Newset", price: R100 },
+            { productId: "001", name: "Newset", price: 100 },
          
           ],
-          status: "Adore",
+          status: "active",
           Address: "Newmarket",
           storecode: "7892",
           storeName: "CETim"
         };
-  
         const res = await chai.request.execute(server).post("/stores").send(newStore);
-  
         console.log("Response:", res);
         console.log("Status Code:", res.status);
         console.log("Response Body:===>", res.body);
