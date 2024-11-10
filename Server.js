@@ -225,41 +225,6 @@ app.get("/stores/:email", async (req, res) => {
   }
 });
 
-
-//GET ONE  possiblelocations by id
-app.get("/possiblelocation/:id", async (req, res) => {
-  try {
-    const id = req.params.id;
-    const location = await db.collection("Possiblelocation").findOne({ _id: new ObjectId(id) });
-
-    if (!location) {
-      return res.status(404).send("No location found with this ID");
-    }
-    console.log("Successfully retrieved user's location by ID:", location);
-    res.status(200).json({ message: "User's location found", data: location });
-  } catch (error) {
-    console.error("Error retrieving user's location by ID:", error);
-    res.status(500).send("Error retrieving user's location by ID");
-  }
-});
-
-//Get all  possiblelocation
-app.get("/possiblelocation", async (req, res) => {
-  try {
-    const locations = await db.collection("Possiblelocation").find({}).toArray();
-
-    if (locations.length === 0) {
-      return res.status(404).send("No locations found");
-    }
-    console.log("Successfully retrieved all locations:", locations);
-
-    res.status(200).json({ message: "All possible locations found", data: locations });
-  } catch (error) {
-    console.error("Error retrieving all locations:", error);
-    res.status(500).send("Error retrieving all locations");
-  }
-});
-
 //POST FOR Possiblelocation 
 app.post("/possiblelocation", async (req, res) => {
   try {
@@ -293,19 +258,37 @@ app.post("/possiblelocation", async (req, res) => {
 
 
 
-//  GET  one User'cart by email 
-app.get("/userscart/:email", async (req, res) => {
+//Get all  possiblelocation
+app.get("/possiblelocation", async (req, res) => {
   try {
-    const userEmail = req.params.email;
-    const userCard = await db.collection("Userscart").findOne({ email: userEmail });
-
-    if (!userCard) return res.status(404).send("No card found for this user");
-
-    console.log("User's cart retrieved successfully");
-    res.status(200).json({ message: "User's cart found", data: userCard });
+    const locations = await db.collection("Possiblelocation").find({}).toArray();
+    
+    if (locations.length === 0) {
+      return res.status(404).send("No locations found");
+    }
+    console.log("Successfully retrieved all locations:", locations);
+    
+    res.status(200).json({ message: "All possible locations found", data: locations });
   } catch (error) {
-    console.error("Error getting User's cart:", error);
-    res.status(500).send("Error getting User's cart");
+    console.error("Error retrieving all locations:", error);
+    res.status(500).send("Error retrieving all locations");
+  }
+});
+
+//GET ONE  possiblelocation by id
+app.get("/possiblelocation/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const location = await db.collection("Possiblelocation").findOne({ _id: new ObjectId(id) });
+
+    if (!location) {
+      return res.status(404).send("No location found with this ID");
+    }
+    console.log("Successfully retrieved user's location by ID:", location);
+    res.status(200).json({ message: "User's location found", data: location });
+  } catch (error) {
+    console.error("Error retrieving user's location by ID:", error);
+    res.status(500).send("Error retrieving user's location by ID");
   }
 });
 
@@ -324,6 +307,7 @@ app.get("/userscart", async (req, res) => {
   }
 });
 
+
 //POST REQUEST FOR USERSCART
 app.post("/userscart", async (req, res) => {
   try {
@@ -339,6 +323,23 @@ app.post("/userscart", async (req, res) => {
     res.status(500).send("Error adding to User's cart");
   }
 });
+
+//  GET  one User'cart by email 
+app.get("/userscart/:email", async (req, res) => {
+  try {
+    const userEmail = req.params.email;
+    const userCard = await db.collection("Userscart").findOne({ email: userEmail });
+
+    if (!userCard) return res.status(404).send("No card found for this user");
+
+    console.log("User's cart retrieved successfully");
+    res.status(200).json({ message: "User's cart found", data: userCard });
+  } catch (error) {
+    console.error("Error getting User's cart:", error);
+    res.status(500).send("Error getting User's cart");
+  }
+});
+
 
 
 // Get All Users
@@ -407,6 +408,7 @@ app.delete("/users/:email", async (req, res) => {
   }
 });
 
+//POST A USER
 app.post("/api/data", (req, res) => {
   const receivedData = req.body;
   console.log("Received data:", receivedData);
@@ -415,8 +417,8 @@ app.post("/api/data", (req, res) => {
 
 
 
-
+//PORT 
 app.listen(port, "0.0.0.0", async () => {
   await connectToMongo();
-  console.log(`Server is running on http://3.81.33.158:${port}`);
+  console.log(`Server is running on http://3.82.26.114:${port}`);
 });
