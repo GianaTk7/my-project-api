@@ -2,7 +2,7 @@
 import { expect, use } from "chai";
 import chaiHttp from "chai-http";
 const chai = use(chaiHttp);
-const server = "http://52.90.48.96:8000";
+const server = "http://3.81.33.158:8000";
 // describe("GET /users", () => {
 //     it("should return user data", async function () {
 
