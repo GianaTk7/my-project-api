@@ -294,7 +294,7 @@ app.post("/possiblelocation", async (req, res) => {
 
 
 //  GET  one User'cart by email 
-app.get("/singleusercart/:email", async (req, res) => {
+app.get("/userscart/:email", async (req, res) => {
   try {
     const userEmail = req.params.email;
     const userCard = await db.collection("Userscart").findOne({ email: userEmail });
